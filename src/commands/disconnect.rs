@@ -17,7 +17,7 @@ impl Command for Disconnect {
     ///
     /// On Windows, this has no implementation for closing the connection (yet).
     ///
-    /// If the tcpkill argument is false, this function will instead use the command /exit to
+    /// If the `Use TCP Kill` box is not ticked this function will instead use the command /exit to
     /// disconnect. This can be less reliable due to the time it takes to copy, paste, and send the
     /// command - but it is guarenteed to log you out of the game in time if it gets through.
     fn run(&self, app: &mut App) {
