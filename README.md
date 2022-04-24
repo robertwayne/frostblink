@@ -1,10 +1,10 @@
 # Frostblink
 
-Frostblink is a tool to run alongside Path of Exile that allows users to define hotkeys, fast logout (TCP disconnect), price checking, and quick access to the trade site, craftofexile, and poe.db based on items or their base types.
+Frostblink is a cross-platform tool to run alongside Path of Exile that allows users to define hotkeys, fast logout (TCP disconnect), price checking, and quick access to the trade site, craftofexile, and poe.db based on items or their base types.
 
 If you are a Windows-user, there are many alternatives available to you, like Lutbot and Awakened POE. I made this because, on Linux, there were always issues with the available options.
 
-*Disclaimer: While I am building this with cross-platform libraries, Linux is my daily driver. Features will be developed for Linux specifically, then ported to Windows as I get time and can test it.*
+*Disclaimer: While I am building this with cross-platform libraries, Linux is my daily driver. Features will be developed for Linux initially, then ported to Windows as I get time and can test it.*
 
 ## Usage
 
