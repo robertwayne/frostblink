@@ -1,0 +1,9 @@
+# Directories
+target
+
+# Config Files
+.env
+
+# User Settings
+.vscode
+.idea

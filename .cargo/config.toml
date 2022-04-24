@@ -1,0 +1,3 @@
+# required to intercept /dev/uinput and interact with /dev/input
+[target.x86_64-unknown-linux-gnu]
+runner = 'sudo -E'
