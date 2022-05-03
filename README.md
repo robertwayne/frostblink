@@ -20,7 +20,7 @@ I'm open to any suggestions, bug reports, or contributions. If you wish to contr
 
 Prerequesties:
 
-- Rust 1.60 (nightly)
+- Rust 1.62 (nightly)
 
 *By contributing, you agree that any code submitted by you shall be dual-licensed under MIT and Apache-2.0.*
 
