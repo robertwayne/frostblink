@@ -20,7 +20,6 @@ wgpu = "0.12"
 winit = "0.26"
 egui-winit = { version = "0.17", features = ["clipboard", "copypasta"] }
 anyhow = "1"
-parking_lot = "0.12"
 copypasta = "0.7"
 
 [target.'cfg(target_os="linux")'.dependencies]

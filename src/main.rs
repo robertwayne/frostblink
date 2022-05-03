@@ -8,8 +8,11 @@ use epi::{
     *,
 };
 use game::GameWindow;
-use parking_lot::Mutex;
-use std::{iter, sync::Arc, time::Instant};
+use std::{
+    iter,
+    sync::{Arc, Mutex, MutexGuard, PoisonError},
+    time::Instant,
+};
 use tracing_subscriber::fmt::format::FmtSpan;
 use winit::{
     dpi::{LogicalPosition, PhysicalSize},
@@ -28,13 +31,21 @@ pub struct ToggleOverlaySignal(Mutex<EventLoopProxy<Event>>);
 
 impl epi::backend::RepaintSignal for RepaintSignal {
     fn request_repaint(&self) {
-        self.0.lock().send_event(Event::RequestRedraw).ok();
+        self.0
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .send_event(Event::RequestRedraw)
+            .ok();
     }
 }
 
 impl ToggleOverlaySignal {
     fn toggle_overlay(&self) {
-        self.0.lock().send_event(Event::ToggleOverlay).ok();
+        self.0
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .send_event(Event::ToggleOverlay)
+            .ok();
     }
 }
 
