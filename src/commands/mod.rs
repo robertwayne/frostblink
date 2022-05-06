@@ -6,12 +6,14 @@ use tracing::debug;
 use crate::app::App;
 
 use self::{
-    disconnect::Disconnect, dnd::DoNotDisturb, hideout::Hideout, toggle_overlay::ToggleOverlay,
+    disconnect::Disconnect, dnd::DoNotDisturb, hideout::Hideout, kills::Kills,
+    toggle_overlay::ToggleOverlay,
 };
 
 pub mod disconnect;
 pub mod dnd;
 pub mod hideout;
+mod kills;
 pub mod toggle_overlay;
 
 pub trait Command {
@@ -28,12 +30,7 @@ pub fn initialize(app: &mut App) {
     ToggleOverlay::default().run(app);
     Disconnect::default().run(app);
     DoNotDisturb::default().run(app);
-
-    // Load all our global hotkeys.
-    // disconnect::bind_disconnect(true);
-    // hideout::bind_hideout();
-    // dnd::bind_dnd();
-    // toggle_visible::bind_toggle_visible(signal);
+    Kills::default().run(app);
 
     // Spawn a thread to handle the global hotkey listener.
     std::thread::spawn(move || {

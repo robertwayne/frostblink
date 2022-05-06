@@ -21,6 +21,10 @@ use winit::{
     window::WindowBuilder,
 };
 
+// TODO: temporary; will be handled inside content via game_log_path
+pub const GAME_LOG_PATH: &str =
+    "/home/rob/.steam/debian-installation/steamapps/common/Path of Exile/logs/Client.txt";
+
 enum Event {
     RequestRedraw,
     ToggleOverlay,

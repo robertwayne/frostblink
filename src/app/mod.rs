@@ -29,6 +29,7 @@ pub struct App {
     pub visible: bool,
     pub toggle_signal: Arc<ToggleOverlaySignal>,
     pub use_tcpkill: bool,
+    pub widgets: Vec<Box<dyn Component>>,
 }
 
 impl App {
@@ -41,6 +42,12 @@ impl App {
             visible: true,
             toggle_signal,
             use_tcpkill: true,
+            widgets: vec![
+                Box::new(Header::default()),
+                Box::new(Bindings::default()),
+                Box::new(Footer::default()),
+                Box::new(Content::default()),
+            ],
         }
     }
 }
@@ -51,12 +58,9 @@ impl epi::App for App {
     }
 
     fn update(&mut self, ctx: &egui::Context, frame: &epi::Frame) {
-        Header::default().show(ctx);
-        Bindings::default().show(ctx);
-        Footer::default().show(ctx);
-
-        // This must always come last.
-        Content::default().show(ctx);
+        for widget in &mut self.widgets {
+            widget.show(ctx);
+        }
 
         frame.set_window_size(ctx.used_size());
     }

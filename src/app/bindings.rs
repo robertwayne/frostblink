@@ -8,6 +8,7 @@ pub struct Bindings {
     pub disconnect: KeybdKey,
     pub hideout: KeybdKey,
     pub dnd: KeybdKey,
+    pub kills: KeybdKey,
     pub custom: HashMap<String, KeybdKey>,
 }
 
@@ -17,6 +18,7 @@ impl Default for Bindings {
             disconnect: KeybdKey::BackquoteKey,
             hideout: KeybdKey::Numrow5Key,
             dnd: KeybdKey::F1Key,
+            kills: KeybdKey::Numrow6Key,
             custom: HashMap::new(),
         }
     }
@@ -69,12 +71,21 @@ impl View for Bindings {
             egui::Label::new(self.dnd.to_string()),
         );
 
-        if response.has_focus() {
-            ui.label(
-                RichText::new("Press the hotkey you want to use to disconnect.")
-                    .color(egui::Color32::RED),
-            );
-        }
+        // if response.has_focus() {
+        //     ui.label(
+        //         RichText::new("Press the hotkey you want to use to disconnect.")
+        //             .color(egui::Color32::RED),
+        //     );
+        // }
+
+        let label_kills = ui.label("Kills");
+        let response = ui.put(
+            Rect {
+                min: pos2(label_disconnect.rect.max.x + 20., label_kills.rect.min.y),
+                max: pos2(edit_size_max, label_kills.rect.max.y),
+            },
+            egui::Label::new(self.kills.to_string()),
+        );
 
         // if self.hotkeys.disconnect.is_empty() {
         //     ui.label(RichText::new("Hotkey cannot be empty.").color(egui::Color32::RED));
