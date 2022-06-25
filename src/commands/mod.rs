@@ -46,20 +46,20 @@ pub fn send(text: &str) {
             EnterKey.press();
             EnterKey.release();
 
-            sleep(Duration::from_millis(20));
+            sleep(Duration::from_millis(50));
 
             // This might need some tweaking to be stable. Seems to work on my machine right now
             // 100% of the time.
 
             LControlKey.press();
-            sleep(Duration::from_millis(20));
+            sleep(Duration::from_millis(50));
             VKey.press();
-            sleep(Duration::from_millis(20));
+            sleep(Duration::from_millis(50));
             VKey.release();
-            sleep(Duration::from_millis(20));
+            sleep(Duration::from_millis(50));
             LControlKey.release();
 
-            sleep(Duration::from_millis(20));
+            sleep(Duration::from_millis(50));
 
             EnterKey.press();
             EnterKey.release();
