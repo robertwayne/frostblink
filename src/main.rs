@@ -66,11 +66,10 @@ fn main() -> Result<(), anyhow::Error> {
 
     let event_loop = EventLoop::with_user_event();
     let window = WindowBuilder::new()
-        .with_decorations(true)
+        .with_decorations(false)
         .with_resizable(false)
         .with_transparent(true)
         .with_always_on_top(true)
-        .with_title("Frostblink")
         .with_position(LogicalPosition::new(x as f32, y as f32))
         .with_inner_size(PhysicalSize {
             width: 400,
