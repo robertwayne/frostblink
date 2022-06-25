@@ -10,7 +10,7 @@ pub struct Hideout;
 
 impl Command for Hideout {
     fn run(&self, _app: &mut App) {
-        Numrow5Key.bind(|| {
+        Numrow7Key.bind(|| {
             // Because we use modifiers elsewhere, we need to ensure that they aren't active
             // before we use the `send` function.
             if !LShiftKey.is_pressed() {
