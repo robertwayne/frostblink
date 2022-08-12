@@ -6,6 +6,7 @@ use tracing::debug;
 
 pub struct Bindings {
     pub disconnect: KeybdKey,
+    pub exit: KeybdKey,
     pub hideout: KeybdKey,
     pub dnd: KeybdKey,
     pub kills: KeybdKey,
@@ -16,9 +17,10 @@ impl Default for Bindings {
     fn default() -> Self {
         Self {
             disconnect: KeybdKey::BackquoteKey,
-            hideout: KeybdKey::Numrow5Key,
-            dnd: KeybdKey::F1Key,
-            kills: KeybdKey::Numrow6Key,
+            exit: KeybdKey::TKey,
+            hideout: KeybdKey::HKey,
+            dnd: KeybdKey::DKey,
+            kills: KeybdKey::KKey,
             custom: HashMap::new(),
         }
     }
@@ -36,11 +38,11 @@ impl Component for Bindings {
 
 impl View for Bindings {
     fn ui(&mut self, ui: &mut egui::Ui) {
+        // TCP Kill / Hard Disconnect
+        // This is used as the base for assigning size values to the other
+        // bindings.
         let label_disconnect = ui.label("Disconnect");
         let edit_size_max = label_disconnect.rect.max.x + 80.;
-
-        let _key = inputbot::from_keybd_key(self.disconnect);
-
         let _response = ui.put(
             Rect {
                 min: pos2(
@@ -52,6 +54,17 @@ impl View for Bindings {
             egui::Label::new(self.disconnect.to_string()),
         );
 
+        // Exit to Character Selection
+        let label_exit = ui.label("Exit");
+        let _response = ui.put(
+            Rect {
+                min: pos2(label_disconnect.rect.max.x + 20., label_exit.rect.min.y),
+                max: pos2(edit_size_max, label_exit.rect.max.y),
+            },
+            egui::Label::new(self.exit.to_string()),
+        );
+
+        // Hideout
         let label_hideout = ui.label("Hideout");
         let _response = ui.put(
             Rect {
@@ -61,8 +74,8 @@ impl View for Bindings {
             egui::Label::new(self.hideout.to_string()),
         );
 
+        // Do Not Disturb
         let label_dnd = ui.label("DND");
-
         let response = ui.put(
             Rect {
                 min: pos2(label_disconnect.rect.max.x + 20., label_dnd.rect.min.y),
