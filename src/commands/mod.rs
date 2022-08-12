@@ -38,18 +38,21 @@ pub fn initialize(app: &mut App) {
     });
 }
 
-/// Copies a given string into the clipboard, then executes a key sequence to simulate pressing
-/// Enter -> Ctrl+V -> Enter.
+/// Copies a given string into the clipboard, then executes a key sequence to
+/// simulate pressing Enter -> Ctrl+V -> Enter.
 pub fn send(text: &str) {
     if let Ok(mut ctx) = ClipboardContext::new() {
+        // Store the current clipboard contents for later.
+        let tmp = ctx.get_contents().unwrap();
+
         if ctx.set_contents(text.into()).is_ok() {
             EnterKey.press();
             EnterKey.release();
 
             sleep(Duration::from_millis(50));
 
-            // This might need some tweaking to be stable. Seems to work on my machine right now
-            // 100% of the time.
+            // This might need some tweaking to be stable. Seems to work on my
+            // machine right now 100% of the time.
 
             LControlKey.press();
             sleep(Duration::from_millis(50));
@@ -64,5 +67,8 @@ pub fn send(text: &str) {
             EnterKey.press();
             EnterKey.release();
         }
+
+        // Restore the original clipboard contents.
+        ctx.set_contents(tmp).unwrap();
     }
 }
