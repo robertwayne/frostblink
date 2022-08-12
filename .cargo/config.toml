@@ -1,3 +1,10 @@
-# required to intercept /dev/uinput and interact with /dev/input
+[build]
+rustflags = ["-C", "target-cpu=native", "-Z", "share-generics=y"]
+
+# Use the mold linker
 [target.x86_64-unknown-linux-gnu]
-runner = 'sudo -E'
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold"]
+
+[unstable]
+sparse-registry = true
