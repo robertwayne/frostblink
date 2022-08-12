@@ -12,9 +12,9 @@ pub struct Kills;
 
 impl Command for Kills {
     fn run(&self, app: &mut App) {
-        Numrow6Key.bind(|| {
-            // Because we use modifiers elsewhere, we need to ensure that they aren't active
-            // before we use the `send` function.
+        app.bindings.kills.bind(|| {
+            // Because we use modifiers elsewhere, we need to ensure that they
+            // aren't active before we use the `send` function.
             if !LShiftKey.is_pressed() {
                 debug!("Getting kills...");
                 commands::send("/kills");

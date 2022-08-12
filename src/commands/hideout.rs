@@ -9,10 +9,8 @@ use super::Command;
 pub struct Hideout;
 
 impl Command for Hideout {
-    fn run(&self, _app: &mut App) {
-        Numrow7Key.bind(|| {
-            // Because we use modifiers elsewhere, we need to ensure that they aren't active
-            // before we use the `send` function.
+    fn run(&self, app: &mut App) {
+        app.bindings.hideout.bind(|| {
             if !LShiftKey.is_pressed() {
                 debug!("Moving to hideout...");
                 commands::send("/hideout");

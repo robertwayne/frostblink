@@ -6,14 +6,15 @@ use tracing::debug;
 use crate::app::App;
 
 use self::{
-    disconnect::Disconnect, dnd::DoNotDisturb, hideout::Hideout, kills::Kills,
+    disconnect::Disconnect, dnd::DoNotDisturb, exit::Exit, hideout::Hideout, kills::Kills,
     toggle_overlay::ToggleOverlay,
 };
 
 pub mod disconnect;
 pub mod dnd;
+pub mod exit;
 pub mod hideout;
-mod kills;
+pub mod kills;
 pub mod toggle_overlay;
 
 pub trait Command {
@@ -29,6 +30,7 @@ pub fn initialize(app: &mut App) {
     Hideout::default().run(app);
     ToggleOverlay::default().run(app);
     Disconnect::default().run(app);
+    Exit::default().run(app);
     DoNotDisturb::default().run(app);
     Kills::default().run(app);
 
