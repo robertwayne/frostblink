@@ -31,51 +31,48 @@ impl Command for Disconnect {
             debug!("Disconnecting...");
 
             if cfg!(target_os = "linux") {
-                match use_tcpkill {
-                    true => {
-                        std::process::Command::new("iptables")
-                            .args([
-                                "-I",
-                                "INPUT",
-                                "-p",
-                                "tcp",
-                                "--sport",
-                                "6112",
-                                "--tcp-flags",
-                                "PSH,ACK",
-                                "PSH,ACK",
-                                "-j",
-                                "REJECT",
-                                "--reject-with",
-                                "tcp-reset",
-                            ])
-                            .spawn()
-                            .expect("Failed to run `iptables` command.");
+                if use_tcpkill {
+                    std::process::Command::new("iptables")
+                        .args([
+                            "-I",
+                            "INPUT",
+                            "-p",
+                            "tcp",
+                            "--sport",
+                            "6112",
+                            "--tcp-flags",
+                            "PSH,ACK",
+                            "PSH,ACK",
+                            "-j",
+                            "REJECT",
+                            "--reject-with",
+                            "tcp-reset",
+                        ])
+                        .spawn()
+                        .expect("Failed to run `iptables` command.");
 
-                        sleep(Duration::from_millis(1000));
+                    sleep(Duration::from_millis(1000));
 
-                        std::process::Command::new("iptables")
-                            .args([
-                                "-D",
-                                "INPUT",
-                                "-p",
-                                "tcp",
-                                "--sport",
-                                "6112",
-                                "--tcp-flags",
-                                "PSH,ACK",
-                                "PSH,ACK",
-                                "-j",
-                                "REJECT",
-                                "--reject-with",
-                                "tcp-reset",
-                            ])
-                            .spawn()
-                            .expect("Failed to run `iptables` command.");
-                    }
-                    false => {
-                        commands::send("/exit");
-                    }
+                    std::process::Command::new("iptables")
+                        .args([
+                            "-D",
+                            "INPUT",
+                            "-p",
+                            "tcp",
+                            "--sport",
+                            "6112",
+                            "--tcp-flags",
+                            "PSH,ACK",
+                            "PSH,ACK",
+                            "-j",
+                            "REJECT",
+                            "--reject-with",
+                            "tcp-reset",
+                        ])
+                        .spawn()
+                        .expect("Failed to run `iptables` command.");
+                } else {
+                    commands::send("/exit");
                 }
             }
 
