@@ -70,7 +70,7 @@ fn main() -> Result<(), anyhow::Error> {
         .with_resizable(false)
         .with_transparent(true)
         .with_always_on_top(true)
-        .with_position(LogicalPosition::new(x as f32, y as f32))
+        .with_position(LogicalPosition::new(f32::from(x), f32::from(y)))
         .with_inner_size(PhysicalSize {
             width: 400,
             height: 500,
@@ -134,7 +134,7 @@ fn main() -> Result<(), anyhow::Error> {
     // Load all our global hotkeys and starts a listener thread.
     commands::initialize(&mut app);
 
-    let mut previous_frame_time = None;
+    let mut previous_frame_time: Option<f32> = None;
     event_loop.run(move |event, _, control_flow| {
         match event {
             RedrawRequested(..) => {
@@ -169,7 +169,7 @@ fn main() -> Result<(), anyhow::Error> {
                             name: "frostblink",
                             web_info: None,
                             cpu_usage: previous_frame_time,
-                            native_pixels_per_point: Some(window.scale_factor() as _),
+                            native_pixels_per_point: Some(window.scale_factor() as f32),
                             prefer_dark_mode: None,
                         },
                         output: app_output,
