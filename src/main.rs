@@ -178,11 +178,12 @@ fn main() -> Result<(), anyhow::Error> {
 
                     app.update(&context, &frame);
 
-                    // End the UI frame. We could now handle the output and draw the UI with the backend.
+                    // End the UI frame. We could now handle the output and draw
+                    // the UI with the backend.
                     let output = context.end_frame();
                     let paint_jobs = context.tessellate(output.shapes);
 
-                    let frame_time = (Instant::now() - egui_start).as_secs_f64() as f32;
+                    let frame_time = egui_start.elapsed().as_secs_f32();
                     previous_frame_time = Some(frame_time);
 
                     let mut encoder =
