@@ -1,7 +1,11 @@
+use egui::TextEdit;
+
 use super::{Component, View};
 
 #[derive(Default)]
-pub struct Content;
+pub struct Content {
+    game_log_path: String,
+}
 
 impl Component for Content {
     fn name(&self) -> &'static str {
@@ -15,9 +19,11 @@ impl Component for Content {
 
 impl View for Content {
     fn ui(&mut self, ui: &mut egui::Ui) {
+        let Self { game_log_path } = self;
+
         ui.label("WIP Content Area");
-        // if let Some(text) = self.clipboard.get() {
-        //     ui.label(text);
-        // }
+
+        ui.label("Game Log Path: ");
+        TextEdit::singleline(game_log_path).show(ui);
     }
 }

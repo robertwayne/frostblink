@@ -1,5 +1,5 @@
 use crate::app::App;
-use inputbot::KeybdKey::*;
+use inputbot::KeybdKey::{LShiftKey, VKey};
 use tracing::debug;
 
 use super::Command;

@@ -5,21 +5,25 @@ mod game;
 use egui_wgpu_backend::{RenderPass, ScreenDescriptor};
 use epi::{
     backend::{AppOutput, FrameData},
-    *,
+    egui, App,
 };
 use game::GameWindow;
 use std::{
     iter,
-    sync::{Arc, Mutex, MutexGuard, PoisonError},
+    sync::{Arc, Mutex, PoisonError},
     time::Instant,
 };
 use tracing_subscriber::fmt::format::FmtSpan;
 use winit::{
     dpi::{LogicalPosition, PhysicalSize},
-    event::Event::*,
+    event::Event::{MainEventsCleared, RedrawRequested, UserEvent, WindowEvent},
     event_loop::{ControlFlow, EventLoop, EventLoopProxy},
     window::WindowBuilder,
 };
+
+// TODO: temporary; will be handled inside content via game_log_path
+pub const GAME_LOG_PATH: &str =
+    "/home/rob/.steam/debian-installation/steamapps/common/Path of Exile/logs/Client.txt";
 
 enum Event {
     RequestRedraw,
@@ -55,19 +59,18 @@ fn main() -> Result<(), anyhow::Error> {
         .with_span_events(FmtSpan::CLOSE)
         .init();
 
-    // TODO: acquire method that runs in separate thread and grabs the handle
-    // if the window is closed / returns an Error
+    // TODO: acquire method that runs in separate thread and grabs the handle if
+    // the window is closed / returns an Error
     let game_window = GameWindow::new()?;
     let (x, y) = game_window.get_position()?;
 
     let event_loop = EventLoop::with_user_event();
     let window = WindowBuilder::new()
-        .with_decorations(true)
+        .with_decorations(false)
         .with_resizable(false)
         .with_transparent(true)
         .with_always_on_top(true)
-        .with_title("Frostblink")
-        .with_position(LogicalPosition::new(x as f32, y as f32))
+        .with_position(LogicalPosition::new(f32::from(x), f32::from(y)))
         .with_inner_size(PhysicalSize {
             width: 400,
             height: 500,
@@ -131,7 +134,7 @@ fn main() -> Result<(), anyhow::Error> {
     // Load all our global hotkeys and starts a listener thread.
     commands::initialize(&mut app);
 
-    let mut previous_frame_time = None;
+    let mut previous_frame_time: Option<f32> = None;
     event_loop.run(move |event, _, control_flow| {
         match event {
             RedrawRequested(..) => {
@@ -139,9 +142,11 @@ fn main() -> Result<(), anyhow::Error> {
                     let output_frame = match surface.get_current_texture() {
                         Ok(frame) => frame,
                         Err(wgpu::SurfaceError::Outdated) => {
-                            // This error occurs when the app is minimized on Windows.
-                            // Silently return here to prevent spamming the console with:
-                            // "The underlying surface has changed, and therefore the swap chain must be updated"
+                            // This error occurs when the app is minimized on
+                            // Windows. Silently return here to prevent spamming
+                            // the console with: "The underlying surface has
+                            // changed, and therefore the swap chain must be
+                            // updated"
                             return;
                         }
                         Err(e) => {
@@ -164,7 +169,7 @@ fn main() -> Result<(), anyhow::Error> {
                             name: "frostblink",
                             web_info: None,
                             cpu_usage: previous_frame_time,
-                            native_pixels_per_point: Some(window.scale_factor() as _),
+                            native_pixels_per_point: Some(window.scale_factor() as f32),
                             prefer_dark_mode: None,
                         },
                         output: app_output,
@@ -173,11 +178,12 @@ fn main() -> Result<(), anyhow::Error> {
 
                     app.update(&context, &frame);
 
-                    // End the UI frame. We could now handle the output and draw the UI with the backend.
+                    // End the UI frame. We could now handle the output and draw
+                    // the UI with the backend.
                     let output = context.end_frame();
                     let paint_jobs = context.tessellate(output.shapes);
 
-                    let frame_time = (Instant::now() - egui_start).as_secs_f64() as f32;
+                    let frame_time = egui_start.elapsed().as_secs_f32();
                     previous_frame_time = Some(frame_time);
 
                     let mut encoder =
@@ -239,9 +245,11 @@ fn main() -> Result<(), anyhow::Error> {
             }
             WindowEvent { event, .. } => match event {
                 winit::event::WindowEvent::Resized(size) => {
-                    // Resize with 0 width and height is used by winit to signal a minimize event on
-                    // Windows. See: https://github.com/rust-windowing/winit/issues/208
-                    // This solves an issue where the app would panic when minimizing on Windows.
+                    // Resize with 0 width and height is used by winit to signal
+                    // a minimize event on Windows. See:
+                    // https://github.com/rust-windowing/winit/issues/208 This
+                    // solves an issue where the app would panic when minimizing
+                    // on Windows.
                     if size.width > 0 && size.height > 0 {
                         surface_config.width = size.width;
                         surface_config.height = size.height;

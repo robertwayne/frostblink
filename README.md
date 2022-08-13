@@ -10,6 +10,15 @@ If you are a Windows-user, there are many alternatives available to you, like Lu
 
 Don't use it yet.
 
+## Default Keybinds
+
+    TCP Disconnect     ~
+    Character Select   Ctrl+E
+    Hideout            Ctrl+F
+    Do Not Disturb     Ctrl+T
+    Kills              Ctrl+K
+    Toggle Overlay     Shift+V
+
 ## GNOME x11 System Stutter
 
 Due to an issue in one of the underlying libraries in GNOME, you may need to patch your mutter version in order to avoid a system stutter every time you send virtual input. You can use my [libmutter-fix](https://github.com/robertwayne/libmutter-fix) script to attempt to patch & recompile libmutter, or patch it manually with [this guide](https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/1858#note_818548).
@@ -20,7 +29,7 @@ I'm open to any suggestions, bug reports, or contributions. If you wish to contr
 
 Prerequesties:
 
-- Rust 1.62 (nightly)
+- Rust 1.65 (nightly)
 
 *By contributing, you agree that any code submitted by you shall be dual-licensed under MIT and Apache-2.0.*
 

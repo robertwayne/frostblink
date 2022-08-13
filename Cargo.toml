@@ -9,7 +9,7 @@ repository = "https://github.com/robertwayne/frostblink"
 publish = false
 
 [dependencies]
-inputbot = { git = "https://github.com/robertwayne/InputBot", branch = "dev" }
+inputbot = { git = "https://github.com/robertwayne/InputBot", branch = "develop" }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "tracing"] }
 egui_wgpu_backend = "0.17"
@@ -17,10 +17,13 @@ pollster = "0.2"
 egui = "0.17"
 epi = "0.17"
 wgpu = "0.12"
-winit = "0.26"
+winit = { version = "0.26" }
 egui-winit = { version = "0.17", features = ["clipboard", "copypasta"] }
 anyhow = "1"
-copypasta = "0.7"
+copypasta = "0.8"
+gtk = { git = "https://github.com/gtk-rs/gtk4-rs.git", package = "gtk4", features = [
+    "v4_6",
+] }
 
 [target.'cfg(target_os="linux")'.dependencies]
 xcb = "1"

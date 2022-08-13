@@ -1,4 +1,4 @@
-use inputbot::KeybdKey::*;
+use inputbot::KeybdKey::LControlKey;
 use tracing::debug;
 
 use crate::{app::App, commands};
@@ -9,11 +9,9 @@ use super::Command;
 pub struct DoNotDisturb;
 
 impl Command for DoNotDisturb {
-    fn run(&self, _app: &mut App) {
-        F2Key.bind(|| {
-            // Because we use modifiers elsewhere, we need to ensure that they aren't active
-            // before we use the `send` function.
-            if !LShiftKey.is_pressed() {
+    fn run(&self, app: &mut App) {
+        app.bindings.dnd.bind(|| {
+            if LControlKey.is_pressed() {
                 debug!("Toggling DND...");
                 commands::send("/dnd");
             };

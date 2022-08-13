@@ -7,7 +7,7 @@ pub struct GameWindow {
 
 impl GameWindow {
     pub fn new() -> Result<GameWindow, anyhow::Error> {
-        let (conn, _) = xcb::Connection::connect(None).unwrap();
+        let (conn, _) = xcb::Connection::connect(None).expect("Failed to connect to X server");
         let setup = conn.get_setup();
 
         let wm_client_list = conn.send_request(&x::InternAtom {
