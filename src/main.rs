@@ -5,18 +5,18 @@ mod game;
 use egui_wgpu_backend::{RenderPass, ScreenDescriptor};
 use epi::{
     backend::{AppOutput, FrameData},
-    *,
+    egui, App,
 };
 use game::GameWindow;
 use std::{
     iter,
-    sync::{Arc, Mutex, MutexGuard, PoisonError},
+    sync::{Arc, Mutex, PoisonError},
     time::Instant,
 };
 use tracing_subscriber::fmt::format::FmtSpan;
 use winit::{
     dpi::{LogicalPosition, PhysicalSize},
-    event::Event::*,
+    event::Event::{MainEventsCleared, RedrawRequested, UserEvent, WindowEvent},
     event_loop::{ControlFlow, EventLoop, EventLoopProxy},
     window::WindowBuilder,
 };
@@ -59,8 +59,8 @@ fn main() -> Result<(), anyhow::Error> {
         .with_span_events(FmtSpan::CLOSE)
         .init();
 
-    // TODO: acquire method that runs in separate thread and grabs the handle
-    // if the window is closed / returns an Error
+    // TODO: acquire method that runs in separate thread and grabs the handle if
+    // the window is closed / returns an Error
     let game_window = GameWindow::new()?;
     let (x, y) = game_window.get_position()?;
 
@@ -142,9 +142,11 @@ fn main() -> Result<(), anyhow::Error> {
                     let output_frame = match surface.get_current_texture() {
                         Ok(frame) => frame,
                         Err(wgpu::SurfaceError::Outdated) => {
-                            // This error occurs when the app is minimized on Windows.
-                            // Silently return here to prevent spamming the console with:
-                            // "The underlying surface has changed, and therefore the swap chain must be updated"
+                            // This error occurs when the app is minimized on
+                            // Windows. Silently return here to prevent spamming
+                            // the console with: "The underlying surface has
+                            // changed, and therefore the swap chain must be
+                            // updated"
                             return;
                         }
                         Err(e) => {
@@ -242,9 +244,11 @@ fn main() -> Result<(), anyhow::Error> {
             }
             WindowEvent { event, .. } => match event {
                 winit::event::WindowEvent::Resized(size) => {
-                    // Resize with 0 width and height is used by winit to signal a minimize event on
-                    // Windows. See: https://github.com/rust-windowing/winit/issues/208
-                    // This solves an issue where the app would panic when minimizing on Windows.
+                    // Resize with 0 width and height is used by winit to signal
+                    // a minimize event on Windows. See:
+                    // https://github.com/rust-windowing/winit/issues/208 This
+                    // solves an issue where the app would panic when minimizing
+                    // on Windows.
                     if size.width > 0 && size.height > 0 {
                         surface_config.width = size.width;
                         surface_config.height = size.height;

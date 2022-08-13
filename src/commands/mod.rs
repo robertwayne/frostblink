@@ -1,7 +1,6 @@
 use copypasta::{ClipboardContext, ClipboardProvider};
-use inputbot::KeybdKey::*;
+use inputbot::KeybdKey::{EnterKey, LControlKey, VKey};
 use std::{thread::sleep, time::Duration};
-use tracing::debug;
 
 use crate::app::App;
 
@@ -23,7 +22,6 @@ pub trait Command {
 
 pub fn initialize(app: &mut App) {
     if cfg!(target_os = "linux") {
-        debug!("Spawning initial device.");
         inputbot::init_device();
     }
 
@@ -44,9 +42,6 @@ pub fn initialize(app: &mut App) {
 /// simulate pressing Enter -> Ctrl+V -> Enter.
 pub fn send(text: &str) {
     if let Ok(mut ctx) = ClipboardContext::new() {
-        // Store the current clipboard contents for later.
-        let tmp = ctx.get_contents().unwrap();
-
         if ctx.set_contents(text.into()).is_ok() {
             EnterKey.press();
             EnterKey.release();
@@ -69,8 +64,5 @@ pub fn send(text: &str) {
             EnterKey.press();
             EnterKey.release();
         }
-
-        // Restore the original clipboard contents.
-        ctx.set_contents(tmp).unwrap();
     }
 }

@@ -6,7 +6,7 @@ pub mod header;
 use std::sync::Arc;
 
 use egui_winit::clipboard::Clipboard;
-use epi::*;
+use epi::egui;
 
 use crate::ToggleOverlaySignal;
 

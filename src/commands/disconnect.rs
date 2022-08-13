@@ -1,6 +1,5 @@
 use std::{thread::sleep, time::Duration};
 
-use inputbot::KeybdKey::*;
 use tracing::debug;
 
 use crate::{app::App, commands};
@@ -13,8 +12,8 @@ pub struct Disconnect;
 impl Command for Disconnect {
     /// Attempts to disconnect from Path of Exile by closing the TCP connection
     /// (by default). On Linux, this solves this by setting a temporary IP
-    /// Tables rule that blocks the PoE port, then removes that rule shortly
-    /// after.
+    /// Tables rule that blocks the Path of Exile port, then removes that rule
+    /// shortly after.
     ///
     /// On Windows, this has no implementation for closing the connection (yet).
     ///
