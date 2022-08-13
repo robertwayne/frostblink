@@ -17,9 +17,9 @@ impl Default for Bindings {
     fn default() -> Self {
         Self {
             disconnect: KeybdKey::BackquoteKey,
-            exit: KeybdKey::TKey,
-            hideout: KeybdKey::HKey,
-            dnd: KeybdKey::DKey,
+            exit: KeybdKey::EKey,
+            hideout: KeybdKey::FKey,
+            dnd: KeybdKey::TKey,
             kills: KeybdKey::KKey,
             custom: HashMap::new(),
         }
