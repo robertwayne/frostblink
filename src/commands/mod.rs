@@ -21,6 +21,8 @@ pub trait Command {
 }
 
 pub fn initialize(app: &mut App) {
+    // This prevents a stutter on Linux systems when the first keybind is
+    // executed.
     if cfg!(target_os = "linux") {
         inputbot::init_device();
     }
