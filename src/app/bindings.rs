@@ -1,5 +1,5 @@
 use super::{Component, View};
-use egui::{pos2, Rect, RichText};
+use egui::{pos2, Rect};
 use inputbot::KeybdKey;
 use std::collections::HashMap;
 use tracing::debug;
