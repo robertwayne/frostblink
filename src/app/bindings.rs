@@ -61,7 +61,7 @@ impl View for Bindings {
                 min: pos2(label_disconnect.rect.max.x + 20., label_exit.rect.min.y),
                 max: pos2(edit_size_max, label_exit.rect.max.y),
             },
-            egui::Label::new(self.exit.to_string()),
+            egui::Label::new(format!("Ctrl {}", self.exit)),
         );
 
         // Hideout
@@ -71,7 +71,7 @@ impl View for Bindings {
                 min: pos2(label_disconnect.rect.max.x + 20., label_hideout.rect.min.y),
                 max: pos2(edit_size_max, label_hideout.rect.max.y),
             },
-            egui::Label::new(self.hideout.to_string()),
+            egui::Label::new(format!("Ctrl {}", self.hideout)),
         );
 
         // Do Not Disturb
@@ -81,7 +81,7 @@ impl View for Bindings {
                 min: pos2(label_disconnect.rect.max.x + 20., label_dnd.rect.min.y),
                 max: pos2(edit_size_max, label_dnd.rect.max.y),
             },
-            egui::Label::new(self.dnd.to_string()),
+            egui::Label::new(format!("Ctrl {}", self.dnd)),
         );
 
         // if response.has_focus() {
@@ -97,7 +97,7 @@ impl View for Bindings {
                 min: pos2(label_disconnect.rect.max.x + 20., label_kills.rect.min.y),
                 max: pos2(edit_size_max, label_kills.rect.max.y),
             },
-            egui::Label::new(self.kills.to_string()),
+            egui::Label::new(format!("Ctrl {}", self.kills)),
         );
 
         // if self.hotkeys.disconnect.is_empty() {
