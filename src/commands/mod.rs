@@ -63,3 +63,25 @@ pub fn send(text: &str) {
         }
     }
 }
+
+/// Pastes a given string into the clipboard, then simulates pressing
+/// Enter -> Ctrl+V. This does not simulate pressing Enter at the end;
+/// you should use `send` for that.
+pub fn paste(text: &str) {
+    if let Ok(mut ctx) = ClipboardContext::new() {
+        if ctx.set_contents(text.into()).is_ok() {
+            EnterKey.press();
+            EnterKey.release();
+
+            sleep(Duration::from_millis(50));
+
+            LControlKey.press();
+            sleep(Duration::from_millis(50));
+            VKey.press();
+            sleep(Duration::from_millis(50));
+            VKey.release();
+            sleep(Duration::from_millis(50));
+            LControlKey.release();
+        }
+    }
+}
