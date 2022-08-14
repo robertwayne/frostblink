@@ -76,7 +76,7 @@ impl View for Bindings {
 
         // Do Not Disturb
         let label_dnd = ui.label("DND");
-        let response = ui.put(
+        let _response = ui.put(
             Rect {
                 min: pos2(label_disconnect.rect.max.x + 20., label_dnd.rect.min.y),
                 max: pos2(edit_size_max, label_dnd.rect.max.y),

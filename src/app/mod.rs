@@ -3,12 +3,7 @@ pub mod content;
 pub mod footer;
 pub mod header;
 
-use std::sync::Arc;
-
 use egui_winit::clipboard::Clipboard;
-use epi::egui;
-
-use crate::ToggleOverlaySignal;
 
 use self::{bindings::Bindings, content::Content, footer::Footer, header::Header};
 
@@ -27,21 +22,21 @@ pub struct App {
     pub x: i32,
     pub y: i32,
     pub visible: bool,
-    pub toggle_signal: Arc<ToggleOverlaySignal>,
     pub use_tcpkill: bool,
     pub bindings: Bindings,
     pub widgets: Vec<Box<dyn Component>>,
 }
 
 impl App {
-    pub fn new(toggle_signal: Arc<ToggleOverlaySignal>) -> Self {
+    pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        cc.egui_ctx.set_visuals(egui::Visuals::dark());
+
         Self {
             name: "Frostblink".to_string(),
             clipboard: Clipboard::default(),
             x: 0,
             y: 0,
             visible: true,
-            toggle_signal,
             use_tcpkill: true,
             bindings: Bindings::default(),
             widgets: vec![
@@ -53,12 +48,8 @@ impl App {
     }
 }
 
-impl epi::App for App {
-    fn name(&self) -> &str {
-        &self.name
-    }
-
-    fn update(&mut self, ctx: &egui::Context, frame: &epi::Frame) {
+impl eframe::App for App {
+    fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
         for widget in &mut self.widgets {
             widget.show(ctx);
         }

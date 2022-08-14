@@ -4,17 +4,13 @@ use std::{thread::sleep, time::Duration};
 
 use crate::app::App;
 
-use self::{
-    disconnect::Disconnect, dnd::DoNotDisturb, exit::Exit, hideout::Hideout, kills::Kills,
-    toggle_overlay::ToggleOverlay,
-};
+use self::{disconnect::Disconnect, dnd::DoNotDisturb, exit::Exit, hideout::Hideout, kills::Kills};
 
 pub mod disconnect;
 pub mod dnd;
 pub mod exit;
 pub mod hideout;
 pub mod kills;
-pub mod toggle_overlay;
 
 pub trait Command {
     fn run(&self, app: &mut App);
@@ -28,7 +24,6 @@ pub fn initialize(app: &mut App) {
     }
 
     Hideout::default().run(app);
-    ToggleOverlay::default().run(app);
     Disconnect::default().run(app);
     Exit::default().run(app);
     DoNotDisturb::default().run(app);

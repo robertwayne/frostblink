@@ -12,18 +12,13 @@ publish = false
 inputbot = { git = "https://github.com/robertwayne/InputBot", branch = "develop" }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "tracing"] }
-egui_wgpu_backend = "0.17"
-pollster = "0.2"
-egui = "0.17"
-epi = "0.17"
-wgpu = "0.12"
-winit = { version = "0.26" }
-egui-winit = { version = "0.17", features = ["clipboard", "copypasta"] }
+egui = "0.18"
+egui-wgpu = "0.18"
+eframe = "0.18"
+winit = { version = "0.27" }
+egui-winit = { version = "0.18", features = ["clipboard"] }
 anyhow = "1"
 copypasta = "0.8"
-gtk = { git = "https://github.com/gtk-rs/gtk4-rs.git", package = "gtk4", features = [
-    "v4_6",
-] }
 
 [target.'cfg(target_os="linux")'.dependencies]
 xcb = "1"
