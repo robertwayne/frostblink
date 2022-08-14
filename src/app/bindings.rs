@@ -10,6 +10,7 @@ pub struct Bindings {
     pub hideout: KeybdKey,
     pub dnd: KeybdKey,
     pub kills: KeybdKey,
+    pub regex: KeybdKey,
     pub custom: HashMap<String, KeybdKey>,
 }
 
@@ -21,6 +22,7 @@ impl Default for Bindings {
             hideout: KeybdKey::FKey,
             dnd: KeybdKey::TKey,
             kills: KeybdKey::KKey,
+            regex: KeybdKey::Numrow6Key,
             custom: HashMap::new(),
         }
     }
@@ -82,6 +84,16 @@ impl View for Bindings {
                 max: pos2(edit_size_max, label_dnd.rect.max.y),
             },
             egui::Label::new(format!("Ctrl {}", self.dnd)),
+        );
+
+        // Regex Quick Search
+        let label_regex = ui.label("Quick Search");
+        let _response = ui.put(
+            Rect {
+                min: pos2(label_disconnect.rect.max.x + 20., label_regex.rect.min.y),
+                max: pos2(edit_size_max, label_regex.rect.max.y),
+            },
+            egui::Label::new(format!("Ctrl {}", self.regex)),
         );
 
         // if response.has_focus() {

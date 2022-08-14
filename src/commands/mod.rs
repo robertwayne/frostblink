@@ -4,13 +4,17 @@ use std::{thread::sleep, time::Duration};
 
 use crate::app::App;
 
-use self::{disconnect::Disconnect, dnd::DoNotDisturb, exit::Exit, hideout::Hideout, kills::Kills};
+use self::{
+    disconnect::Disconnect, dnd::DoNotDisturb, exit::Exit, hideout::Hideout, kills::Kills,
+    regex::Regex,
+};
 
 pub mod disconnect;
 pub mod dnd;
 pub mod exit;
 pub mod hideout;
 pub mod kills;
+pub mod regex;
 
 pub trait Command {
     fn run(&self, app: &mut App);
@@ -28,6 +32,7 @@ pub fn initialize(app: &mut App) {
     Exit::default().run(app);
     DoNotDisturb::default().run(app);
     Kills::default().run(app);
+    Regex::default().run(app);
 
     // Spawn a thread to handle the global hotkey listener.
     std::thread::spawn(move || {
@@ -44,9 +49,6 @@ pub fn send(text: &str) {
             EnterKey.release();
 
             sleep(Duration::from_millis(50));
-
-            // This might need some tweaking to be stable. Seems to work on my
-            // machine right now 100% of the time.
 
             LControlKey.press();
             sleep(Duration::from_millis(50));
