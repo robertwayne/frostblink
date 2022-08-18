@@ -16,11 +16,13 @@ fn main() -> Result<(), anyhow::Error> {
         .with_span_events(FmtSpan::CLOSE)
         .init();
 
-    let game_window = GameWindow::new()?;
-    let (x, y) = game_window.get_position()?;
+    let (x, y) = match GameWindow::new() {
+        Ok(game) => game.get_position()?,
+        Err(_) => (0, 0),
+    };
 
     let opts = eframe::NativeOptions {
-        always_on_top: true,
+        always_on_top: false,
         decorated: true,
         resizable: false,
         initial_window_pos: Some(Pos2 {
@@ -28,6 +30,7 @@ fn main() -> Result<(), anyhow::Error> {
             y: f32::from(y),
         }),
         initial_window_size: Some(Vec2 { x: 400., y: 500. }),
+        max_window_size: Some(Vec2 { x: 400., y: 500. }),
         ..Default::default()
     };
 
