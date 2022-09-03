@@ -8,17 +8,13 @@ pub struct Settings {
 
 impl Default for Settings {
     fn default() -> Self {
-        Self {
-            game_log_path: "".to_string(),
-        }
+        Self { game_log_path: "".to_string() }
     }
 }
 
 impl Settings {
     pub fn new(game_log_path: Option<String>) -> Self {
-        Self {
-            game_log_path: game_log_path.unwrap_or_else(|| "".to_string()),
-        }
+        Self { game_log_path: game_log_path.unwrap_or_else(|| "".to_string()) }
     }
 }
 

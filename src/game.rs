@@ -49,10 +49,7 @@ impl GameWindow {
 
                     // TODO: this is a pretty naive solution; alternative?
                     if title == "Path of Exile" {
-                        return Ok(GameWindow {
-                            connection: conn,
-                            window: *client,
-                        });
+                        return Ok(GameWindow { connection: conn, window: *client });
                     }
                 }
             }
@@ -62,9 +59,9 @@ impl GameWindow {
     }
 
     pub fn get_resolution(&self) -> Result<(u16, u16), anyhow::Error> {
-        let cookie = self.connection.send_request(&x::GetGeometry {
-            drawable: x::Drawable::Window(self.window),
-        });
+        let cookie = self
+            .connection
+            .send_request(&x::GetGeometry { drawable: x::Drawable::Window(self.window) });
         let reply = self.connection.wait_for_reply(cookie)?;
         let (width, height) = (reply.width(), reply.height());
 
@@ -72,9 +69,9 @@ impl GameWindow {
     }
 
     pub fn get_position(&self) -> Result<(i16, i16), anyhow::Error> {
-        let cookie = self.connection.send_request(&x::GetGeometry {
-            drawable: x::Drawable::Window(self.window),
-        });
+        let cookie = self
+            .connection
+            .send_request(&x::GetGeometry { drawable: x::Drawable::Window(self.window) });
         let reply = self.connection.wait_for_reply(cookie)?;
         let (x, y) = (reply.x(), reply.y());
 
