@@ -9,7 +9,7 @@ repository = "https://github.com/robertwayne/frostblink"
 publish = false
 
 [dependencies]
-inputbot = { git = "https://github.com/robertwayne/InputBot", branch = "develop" }
+inputbot = { path = "../InputBot" }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "tracing"] }
 egui = "0.18"
