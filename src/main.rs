@@ -25,10 +25,7 @@ fn main() -> Result<(), anyhow::Error> {
         always_on_top: false,
         decorated: true,
         resizable: false,
-        initial_window_pos: Some(Pos2 {
-            x: f32::from(x),
-            y: f32::from(y),
-        }),
+        initial_window_pos: Some(Pos2 { x: f32::from(x), y: f32::from(y) }),
         initial_window_size: Some(Vec2 { x: 400., y: 500. }),
         max_window_size: Some(Vec2 { x: 400., y: 500. }),
         ..Default::default()

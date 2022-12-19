@@ -17,11 +17,8 @@ impl Component for Header {
 
 impl View for Header {
     fn ui(&mut self, ui: &mut egui::Ui) {
-        ui.with_layout(
-            egui::Layout::centered_and_justified(Direction::LeftToRight),
-            |ui| {
-                ui.label("Shift+V to toggle overlay.");
-            },
-        );
+        ui.with_layout(egui::Layout::centered_and_justified(Direction::LeftToRight), |ui| {
+            ui.label("Shift+V to toggle overlay.");
+        });
     }
 }

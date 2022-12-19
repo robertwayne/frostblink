@@ -47,10 +47,7 @@ impl View for Bindings {
         let edit_size_max = label_disconnect.rect.max.x + 80.;
         let _response = ui.put(
             Rect {
-                min: pos2(
-                    label_disconnect.rect.max.x + 20.,
-                    label_disconnect.rect.min.y,
-                ),
+                min: pos2(label_disconnect.rect.max.x + 20., label_disconnect.rect.min.y),
                 max: pos2(edit_size_max, label_disconnect.rect.max.y),
             },
             egui::Label::new(self.disconnect.to_string()),
